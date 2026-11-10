@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ app_name }}{% endblock %} · {{ app_name }}</title>
+  <meta name="description" content="{{ app_name }} — 把对话里反复强调的规矩，收成一份能直接用的 SKILL.md">
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="/">
+    <span class="brand-mark">SEA</span>
+    <span>{{ app_name }}</span>
+  </a>
+  <nav class="nav-links">
+    <a href="/" class="{{ 'on' if active == 'overview' else '' }}">概览</a>
+    <a href="/play" class="{{ 'on' if active == 'play' else '' }}">提炼</a>
+    <a href="/library" class="{{ 'on' if active == 'library' else '' }}">我的库</a>
+    <a href="/learn" class="{{ 'on' if active == 'learn' else '' }}">原理</a>
+  </nav>
+  <span class="nav-spacer"></span>
+  <a class="btn btn-primary btn-sm" href="/play">开始提炼</a>
+</header>
+
+{% block content %}{% endblock %}
+
+<footer>
+  <div>{{ app_name }} · {{ app_name_zh }} · v0.1.0</div>
+  <div class="mono">SKILL.md · 14 项体检 · 3 种落地</div>
+</footer>
+
+<div class="toast" id="toast"></div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

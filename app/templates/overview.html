@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}概览{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Skill Expert Agent</div>
+    <h1>你反复跟 AI 强调的那些规矩，<br>该有个地方<em>存下来</em></h1>
+    <p class="lead">
+      粘一段对话，收成一份能直接放进项目的 SKILL.md。
+      要求按四类归档，每条都指得回原话；出门前过一遍体检。再粘一段，它就变成第二版。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="/play">试一段对话 →</a>
+      <a class="btn btn-ghost" href="/learn">它怎么判断</a>
+      <a class="btn btn-ghost" href="/library">我的库</a>
+    </div>
+    <div class="hero-note">
+      默认用内置规则引擎：不联网、不花钱，点开就能跑完整个流程。配上 API Key 自动换成模型，代码不用改。
+    </div>
+
+    <div class="stats">
+      {% for s in stats %}
+      <div class="stat">
+        <div class="stat-label">{{ s.label }}</div>
+        <div class="stat-value">{{ s.value }}</div>
+        <div class="stat-hint">{{ s.hint }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="eyebrow">它到底做了什么</div>
+    <h2>四个动作，从一段对话到一份能用的文件</h2>
+    <p class="lead" style="margin-bottom:28px">
+      圈句 → 归档 → 落格 → 体检。每一步都有确定的输入和输出，你随时能看见它走到哪了。
+    </p>
+    <div class="grid-3">
+      <div class="card feature">
+        <h3><span class="dot"></span>逐句圈定</h3>
+        <p>只认"对 AI 的要求"。寒暄、任务请求、对世界的描述，先被过滤掉再谈提炼。</p>
+      </div>
+      <div class="card feature">
+        <h3><span class="dot"></span>说话有据</h3>
+        <p>每条要求都带一句原话。指不回原文的会被标黄——不解释来源的规则，不敢放进你的项目。</p>
+      </div>
+      <div class="card feature">
+        <h3><span class="dot"></span>分四类归档</h3>
+        <p>硬禁令、风格偏好、固定步骤、对照样例。同一句话同时像两类，只留在更硬的那类里。</p>
+      </div>
+      <div class="card feature">
+        <h3><span class="dot"></span>按格落文</h3>
+        <p>四类落进 SKILL.md 的四段正文。结构是定死的，不让模型即兴发明章节。</p>
+      </div>
+      <div class="card feature">
+        <h3><span class="dot"></span>出门体检</h3>
+        <p>14 项检查，命名、描述焦点、正文体量、原文溯源、规则互斥。哪项不过，直接告诉你改哪儿。</p>
+      </div>
+      <div class="card feature">
+        <h3><span class="dot"></span>攒成版本</h3>
+        <p>再粘一段对话就是 v2。新版没提到的旧规矩只标记、不删除，去留由你决定。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="eyebrow">三个行业</div>
+    <h2>不用自己想该粘什么</h2>
+    <p class="lead" style="margin-bottom:28px">
+      客服、数据、面试——三类最容易"人一走，规矩就散"的场景。点开就能拿它们试。
+    </p>
+    <div class="grid-3">
+      {% for s in samples %}
+      <a class="card sample-card" href="/play?sample={{ s.key }}">
+        <span class="sample-tag">{{ s.tag }}</span>
+        <h3>{{ s.title }}</h3>
+        <div class="sample-hook">{{ s.hook }}</div>
+        <div class="sample-go">用这段对话跑一遍 →</div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="grid-2" style="gap:20px;align-items:center">
+      <div>
+        <div class="eyebrow">为什么是这四类</div>
+        <h2>一个人对 AI 的期待，拆开就四件事</h2>
+        <p>
+          像不像你、能不能碰、按不按顺序、拿不准时听谁的。
+          四类刚好对应 SKILL.md 正文的四段，所以归类和落格其实是同一步的两面。
+        </p>
+        <p style="font-size:13.5px;color:var(--ink3)">
+          分类不是拍脑袋定的：它由 SKILL.md 的加载机制倒推出来——启动时只读 name 和 description，匹配上了才读正文。
+        </p>
+        <a class="btn" href="/learn">看完整推导</a>
+      </div>
+      <div class="card">
+        <div class="layer"><div class="layer-num">偏好</div><div>"短句优先"、"别太正式"、"语气克制"</div></div>
+        <div class="layer"><div class="layer-num">约束</div><div>"不要出现大概"、"必须复述问题"</div></div>
+        <div class="layer"><div class="layer-num">工作流</div><div>"先道歉再给方案"、"先核总数再发"</div></div>
+        <div class="layer"><div class="layer-num">示例</div><div>"反例是…正例是…"、"照这句的写法"</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

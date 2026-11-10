@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}提炼{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <div class="play-grid">
+
+    <!-- 左：输入 -->
+    <div class="panel">
+      <div class="panel-head">
+        <span class="panel-title">对话原文</span>
+        <span class="hint" id="providerHint">规则引擎 · 本地</span>
+      </div>
+      <div class="panel-body">
+        <div class="chips" id="sampleChips">
+          {% for s in samples %}
+          <button class="chip" data-key="{{ s.key }}" data-text="{{ s.text }}">{{ s.title }}</button>
+          {% endfor %}
+        </div>
+
+        <textarea id="conv" spellcheck="false"
+          placeholder="把一段你和 AI 的对话贴进来。最好是那种你反复纠正它的场景：&#10;&#10;我：这条回复太模板了，重写&#10;我：第一句要先复述客户的问题&#10;我：不要用「亲」，一律用「您」&#10;我：任何情况下都不许承诺到账时间&#10;AI：明白了">{{ initial.text if initial else '' }}</textarea>
+
+        <div class="meta-row">
+          <span id="charCount">0 字</span>
+          <span id="baseHint">
+            {% if base_skill_id %}接在已有版本上 · base={{ base_skill_id[:8] }}{% else %}新建一份{% endif %}
+          </span>
+        </div>
+
+        <div class="run-bar">
+          <button class="btn btn-primary" id="runBtn">开始提炼</button>
+          <button class="btn btn-ghost btn-sm" id="clearBtn">清空</button>
+          <span class="hint" id="runStatus"></span>
+        </div>
+        {% if base_skill_id %}
+        <input type="hidden" id="baseSkillId" value="{{ base_skill_id }}">
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- 右：过程 -->
+    <div>
+      <div class="panel" style="margin-bottom:14px">
+        <div class="panel-head">
+          <span class="panel-title">提炼过程</span>
+          <span class="hint" id="actHint">等待输入</span>
+        </div>
+        <div class="panel-body" style="padding:12px">
+          <div class="acts" id="acts">
+
+            <div class="act" data-act="signals">
+              <div class="act-head">
+                <span class="act-no">1</span>
+                <span class="act-title">圈句</span>
+                <span class="act-state">未开始</span>
+              </div>
+              <div class="act-body">
+                <div class="act-empty" id="signalsEmpty">从对话里挑出"对 AI 的要求"，每条保留原话。</div>
+                <div id="signalsList"></div>
+              </div>
+            </div>
+
+            <div class="act" data-act="clusters">
+              <div class="act-head">
+                <span class="act-no">2</span>
+                <span class="act-title">归档</span>
+                <span class="act-state">未开始</span>
+              </div>
+              <div class="act-body">
+                <div class="buckets" id="buckets"></div>
+              </div>
+            </div>
+
+            <div class="act" data-act="mapping">
+              <div class="act-head">
+                <span class="act-no">3</span>
+                <span class="act-title">落格</span>
+                <span class="act-state">未开始</span>
+              </div>
+              <div class="act-body">
+                <div id="mapping" class="hint">四类要求 → SKILL.md 的四段正文。</div>
+              </div>
+            </div>
+
+            <div class="act" data-act="compose">
+              <div class="act-head">
+                <span class="act-no">4</span>
+                <span class="act-title">成稿</span>
+                <span class="act-state">未开始</span>
+              </div>
+              <div class="act-body">
+                <dl class="kv">
+                  <dt>name</dt><dd id="fieldName">—</dd>
+                  <dt>description</dt><dd id="fieldDesc">—</dd>
+                </dl>
+                <pre class="skill-body" id="bodyPre"></pre>
+              </div>
+            </div>
+
+            <div class="act" data-act="lint">
+              <div class="act-head">
+                <span class="act-no">5</span>
+                <span class="act-title">体检</span>
+                <span class="act-state">未开始</span>
+              </div>
+              <div class="act-body">
+                <div class="lights" id="lights"></div>
+                <div id="issues"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="resultPanel" style="display:none">
+        <div class="panel-head">
+          <span class="panel-title">产出</span>
+          <span class="hint" id="resultHint"></span>
+        </div>
+        <div class="panel-body">
+          <div class="run-bar">
+            <button class="btn btn-primary btn-sm" id="saveBtn">收进库</button>
+            <a class="btn btn-sm btn-ghost" id="libraryLink" href="/library" style="display:none">去库里看看 →</a>
+          </div>
+          <div class="export-bar" id="exportBar">
+            <button class="chip on" data-fmt="claude-code">放进 Claude Code</button>
+            <button class="chip" data-fmt="chatgpt">贴进 ChatGPT</button>
+            <button class="chip" data-fmt="memory">通用短版</button>
+          </div>
+          <div class="export-hint" id="exportHint"></div>
+          <div class="export-preview" id="exportPreview"></div>
+          <div class="run-bar" style="margin-top:10px">
+            <button class="btn btn-sm" id="copyBtn">复制</button>
+            <a class="btn btn-sm" id="downloadLink" href="#" download>下载文件</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/app.js"></script>
+{% endblock %}

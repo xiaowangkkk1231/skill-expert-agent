@@ -1,0 +1,32 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+build/
+dist/
+
+# ---- 本地数据：绝不提交 ----
+# data/ 里是 SQLite 库和试跑产生的 skill 记录
+data/
+*.db
+*.db-shm
+*.db-wal
+server.log
+
+# ---- 环境变量：只提交 .env.example ----
+.env
+.env.*
+!.env.example
+
+# ---- 截图仅本地留档 ----
+_shots/
+
+# ---- 系统与编辑器 ----
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log

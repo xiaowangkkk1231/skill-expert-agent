@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}我的库{% endblock %}
+
+{% block content %}
+<div class="wrap section">
+  <div class="eyebrow">Collected</div>
+  <h2 style="margin-bottom:6px">已收下的 Skill</h2>
+  <p class="lead" style="margin-bottom:24px">
+    每跑完一次并收下的结果都在这儿。同一份再跑一遍会攒成 v2、v3，旧版本一直留着，随时能翻回去看当时是怎么定的。
+  </p>
+
+  <div class="panel">
+    <div class="panel-head">
+      <span class="panel-title">全部</span>
+      <button class="btn btn-sm btn-ghost" id="refreshBtn">刷新</button>
+    </div>
+    <div id="skillList"><div class="empty">加载中…</div></div>
+  </div>
+
+  <div class="hint" style="margin-top:14px">
+    数据存在 <span class="mono">data/sea.db</span>（SQLite），不联网、不上传。删掉文件即清空。
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/app.js"></script>
+{% endblock %}
