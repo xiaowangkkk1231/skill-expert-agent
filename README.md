@@ -1,5 +1,9 @@
 # Skill Expert Agent
 
+[![tests](https://github.com/xiaowangkkk1231/skill-expert-agent/actions/workflows/tests.yml/badge.svg)](https://github.com/xiaowangkkk1231/skill-expert-agent/actions/workflows/tests.yml)
+[![python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![license](https://img.shields.io/badge/license-MIT-0d7a5b)](./LICENSE)
+
 > Skill 专家智能体 — 你反复跟 AI 强调的那些规矩，该有个地方存下来
 
 粘一段对话，收成一份能直接放进项目的 `SKILL.md`：
@@ -21,6 +25,16 @@
 | 面试评估标准 | 评价表上全是「感觉不错」，复盘时查无实据 | `hiring-rules` |
 
 选这三类，是因为它们最容易"人一走，规矩就散"，也最少被人系统地沉淀下来。
+
+## 界面
+
+提炼页：左边贴对话，右边五步实时推进。
+
+![提炼页](docs/screenshot-play.png)
+
+概览页：
+
+![概览页](docs/screenshot-overview.png)
 
 ---
 
